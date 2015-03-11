@@ -1,0 +1,16 @@
+<configuration>
+  <appender name="SOLR" class="at.bro.code.logback.appender.solr.SolRLogbackAppender">
+  	<solrServer>http://localhost:8983/solr/collection1/</solrServer>
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="ERROR">
+    <appender-ref ref="SOLR" />
+  </root>
+  
+</configuration>
