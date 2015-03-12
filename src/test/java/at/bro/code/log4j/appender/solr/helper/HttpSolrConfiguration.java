@@ -5,21 +5,22 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.solr.core.SolrTemplate;
-import org.springframework.data.solr.server.support.EmbeddedSolrServerFactoryBean;
+import org.springframework.data.solr.server.support.HttpSolrServerFactoryBean;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-public class EmbeddedSolrConfiguration {
+public class HttpSolrConfiguration {
 
     @Resource
-    private org.springframework.core.env.Environment environment;
+    private Environment environment;
 
     @Bean
-    public EmbeddedSolrServerFactoryBean solrServerFactoryBean() {
-        final EmbeddedSolrServerFactoryBean factory = new EmbeddedSolrServerFactoryBean();
+    public HttpSolrServerFactoryBean solrServerFactoryBean() {
+        final HttpSolrServerFactoryBean factory = new HttpSolrServerFactoryBean();
 
-        factory.setSolrHome(environment.getRequiredProperty("solr.solr.home"));
+        factory.setUrl(environment.getRequiredProperty("solr.server.url"));
 
         return factory;
     }

@@ -1,6 +1,6 @@
 <configuration>
   <appender name="SOLR" class="at.bro.code.logback.appender.solr.SolRLogbackAppender">
-  	<solrServer>http://localhost:8983/solr/collection1/</solrServer>
+  	<solrServer>http://localhost:8983/solr/</solrServer>
   </appender>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

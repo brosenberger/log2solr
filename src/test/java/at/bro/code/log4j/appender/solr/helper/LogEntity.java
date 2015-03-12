@@ -1,15 +1,13 @@
 package at.bro.code.log4j.appender.solr.helper;
 
 import org.apache.solr.client.solrj.beans.Field;
-import org.springframework.data.annotation.Id;
 
 public class LogEntity {
 
-    @Id
-    @Field("uid")
-    private String uid;
+    @Field("id")
+    private String id;
 
-    @Field("message")
+    @Field("message_s")
     private String message;
 
     public String getMessage() {
@@ -20,12 +18,12 @@ public class LogEntity {
         this.message = message;
     }
 
-    public String getUid() {
-        return uid;
+    public String getId() {
+        return id;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setId(String id) {
+        this.id = id;
     }
 
 }
