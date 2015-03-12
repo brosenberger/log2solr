@@ -32,6 +32,7 @@ public class SolrLog4jAppenderTest extends AbstractTestNGSpringContextTests {
         Assert.assertTrue(count > 0);
         for (final LogEntity e : repository.findAll()) {
             Assert.assertEquals(e.getMessage(), msg);
+            Assert.assertEquals(e.getEnriched(), "some fancy value");
         }
     }
 }

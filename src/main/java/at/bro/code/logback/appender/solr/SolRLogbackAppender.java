@@ -18,9 +18,19 @@ public class SolRLogbackAppender<E> extends UnsynchronizedAppenderBase<E> {
     private int threadCount = 10;
     private int connectionTimeOut = 1000;
     private ConcurrentUpdateSolrServer solrClient;
+    private String informationEnricherClass;
+    private SolrDocumentEnrichter enricher;
 
     public SolRLogbackAppender() {
         System.out.println("initialized appender");
+    }
+
+    public String getInformationEnricherClass() {
+        return informationEnricherClass;
+    }
+
+    public void setInformationEnricherClass(String informationEnricherClass) {
+        this.informationEnricherClass = informationEnricherClass;
     }
 
     public int getQueueSize() {
@@ -59,6 +69,18 @@ public class SolRLogbackAppender<E> extends UnsynchronizedAppenderBase<E> {
     public void start() {
         solrClient = new ConcurrentUpdateSolrServer(solrServer, queueSize, threadCount);
         solrClient.setConnectionTimeout(connectionTimeOut);
+
+        if (informationEnricherClass != null && informationEnricherClass.length() > 0) {
+            try {
+                final Object enricher = Class.forName(informationEnricherClass).newInstance();
+                if (enricher instanceof SolrDocumentEnrichter) {
+                    this.enricher = (SolrDocumentEnrichter) enricher;
+                }
+            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
         super.start();
     }
 
@@ -81,6 +103,9 @@ public class SolRLogbackAppender<E> extends UnsynchronizedAppenderBase<E> {
                 doc.addField("message_s", event.getMessage());
                 doc.addField("formatted_message_s", event.getFormattedMessage());
                 doc.addField("level_s", event.getLevel());
+                if (enricher != null) {
+                    enricher.enrichDocument(event, doc);
+                }
             }
 
             try {

@@ -5,8 +5,9 @@ The slf4j-solrappender should be a small addition to be able to send log events 
 To run the test, please download a solr 4.9 instance (http://lucene.apache.org/solr/downloads.html) and run it locally. The needed schema file can be found in the test-resources of this project
 
 2015-03-12
+ * [R1] add interface for solr document enricher
  * initial version of a logback appender
- ** logs some basic information (message, formatted message, level and time)
+ ->  logs some basic information (message, formatted message, level and time)
 
 # Upcomming Requirements
 

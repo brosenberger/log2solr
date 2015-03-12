@@ -1,6 +1,7 @@
 <configuration>
   <appender name="SOLR" class="at.bro.code.logback.appender.solr.SolRLogbackAppender">
   	<solrServer>http://localhost:8983/solr/</solrServer>
+  	<informationEnricherClass>at.bro.code.log4j.appender.solr.enricher.TestEnricher</informationEnricherClass>
   </appender>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
